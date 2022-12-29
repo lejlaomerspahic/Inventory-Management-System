@@ -4,7 +4,7 @@ import router from "./routes/user-routes";
 import proizvodiRouter from "./routes/proizvodi-routes";
 import cors from "cors";
 const app = express();
-const port = process.env.PORT || 80109;
+const port = process.env.PORT || 8082;
 
 app.use(cors());
 app.use(express.json());
@@ -22,4 +22,3 @@ mongoose
   )
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err));
-
