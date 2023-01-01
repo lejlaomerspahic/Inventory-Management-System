@@ -28,11 +28,11 @@ function Auth() {
         email: inputs.email,
         password: inputs.password,
       })
-      .then((data) => {
-        console.log(data.data);
-        return data.data;
-      })
       .catch((err) => console.log(err));
+
+      const data=await res.data;
+      console.log(data);
+      return data;
   };
 
   const handleSubmit = (e) => {

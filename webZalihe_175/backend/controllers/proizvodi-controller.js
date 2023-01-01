@@ -1,9 +1,9 @@
-import index from "../models/index";
+import product from "../models/product";
 
 export const getAllProducts = async (req, res, next) => {
   let products;
   try {
-    products = await index.find();
+    products = await product.find();
   } catch (err) {
     return console.log(err);
   }
@@ -15,26 +15,26 @@ export const getAllProducts = async (req, res, next) => {
 
 export const addProducts = async (req, res, next) => {
   const { name, picURL, price, profitMargin } = req.body;
-  const product = new index({
+  const product1 = new product({
     name,
     picURL,
     price,
     profitMargin,
   });
   try {
-    await product.save();
+    await product1.save();
   } catch (err) {
     return console.log(err);
   }
-  return res.status(200).json({ product });
+  return res.status(200).json({ product1 });
 };
 
 export const updateProducts = async (req, res, next) => {
   const { name, picURL, price, profitMargin } = req.body;
   const productId = req.params.id;
-  let product;
+  let product1;
   try {
-    product = await index.findByIdAndUpdate(productId, {
+    product1 = await product.findByIdAndUpdate(productId, {
       name,
       picURL,
       price,
@@ -43,36 +43,36 @@ export const updateProducts = async (req, res, next) => {
   } catch (err) {
     return console.log(err);
   }
-  if (!product) {
+  if (!product1) {
     return res.status(500).json({ message: "Unable to update the product" });
   }
-  return res.status(200).json({ product });
+  return res.status(200).json({ product1 });
 };
 
 export const getById = async (req, res, next) => {
   const id = req.params.id;
-  let product;
+  let product1;
   try {
-    product = await index.findById(id);
+    product1 = await product.findById(id);
   } catch (err) {
     return console.log(err);
   }
-  if (!product) {
+  if (!product1) {
     return res.status(404).json({ message: "No product found" });
   }
-  return res.status(200).json({ product });
+  return res.status(200).json({ product1 });
 };
 
 export const deleteProduct = async (req, res, next) => {
   const id = req.params.id;
 
-  let product;
+  let product1;
   try {
-    product = await index.findByIdAndRemove(id);
+    product1 = await product.findByIdAndRemove(id);
   } catch (err) {
     return console.log(err);
   }
-  if (!product) {
+  if (!product1) {
     return res.status(500).json({ message: "Unable to delete" });
   }
   return res.status(200).json({ message: "Successfully delete" });

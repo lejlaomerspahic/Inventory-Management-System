@@ -12,14 +12,18 @@ picURL:{
     required: true,
 },
 price: {
-    type: String,
+    type: Number,
     required: true,
 },
 profitMargin:{
-    type: String,
+    type: Number,
     required: true,
+},
+productionProcess: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "ProductionProcess",
 }
 });
 
-export default mongoose.model("index", proizvodiSchema);
+export default mongoose.model("product", proizvodiSchema);
 

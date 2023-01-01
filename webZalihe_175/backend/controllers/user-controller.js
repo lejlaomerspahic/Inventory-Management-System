@@ -1,4 +1,12 @@
+
 import user from "../models/user";
+import Role from "../models/role";
+import Employee from "../models/employee";
+import Material from "../models/material";
+import ProductionProcess from "../models/productionProcess";
+import ProductionProcessItem from "../models/productionProcessItem";
+import Suppplier from "../models/supplier";
+
 import bcrypt from "bcryptjs";
 
 export const getAllUser = async (req, res, next) => {
@@ -61,5 +69,5 @@ export const login = async (req, res, next) => {
       message: "Incorrect Password",
     });
   }
-  return res.status(200).json({ message: "Login successfull"});
+  return res.status(200).json({ message: "Login successfull", user: existingUser});
 };
