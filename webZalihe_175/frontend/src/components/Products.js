@@ -33,6 +33,9 @@ const Products = ({ name, picURL, price, id }) => {
             color="info"
             onClick={handleEdit}
           >
+            <IconButton>
+              <EditIcon></EditIcon>
+            </IconButton>
             Edit
           </Button>
         </Box>
