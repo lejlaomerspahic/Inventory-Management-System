@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema =mongoose.Schema;
 
 const productionProcessItemScheme=new Schema({
-  quantity: {
+  quantity: { 
     type: Number,
     required: true,
   },

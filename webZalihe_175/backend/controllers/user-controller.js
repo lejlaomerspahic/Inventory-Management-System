@@ -1,11 +1,5 @@
 
 import user from "../models/user";
-import Role from "../models/role";
-import Employee from "../models/employee";
-import Material from "../models/material";
-import ProductionProcess from "../models/productionProcess";
-import ProductionProcessItem from "../models/productionProcessItem";
-import Suppplier from "../models/supplier";
 
 import bcrypt from "bcryptjs";
 
@@ -23,10 +17,10 @@ export const getAllUser = async (req, res, next) => {
 };
 
 export const signup = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, password, role, employee } = req.body;
   let existingUser;
   try {
-    existingUser = await user.findOne({ email });
+    existingUser = await user.findOne({ name });
   } catch (err) {
     return console.log(err);
   }
@@ -37,8 +31,9 @@ export const signup = async (req, res, next) => {
 
   const User = new user({
     name,
-    email,
     password: hashedPassword,
+    role, 
+    employee
   });
 
   try {
@@ -50,17 +45,17 @@ export const signup = async (req, res, next) => {
 };
 
 export const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { name, password } = req.body;
   let existingUser;
   try {
-    existingUser = await user.findOne({ email });
+    existingUser = await user.findOne({ name });
   } catch (err) {
     return console.log(err);
   }
   if (!existingUser) {
     return res
       .status(404)
-      .json({ message: "Couldn't find user by this email!" });
+      .json({ message: "Couldn't find user by this name!" });
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);

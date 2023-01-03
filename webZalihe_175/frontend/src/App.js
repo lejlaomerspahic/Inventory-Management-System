@@ -5,7 +5,7 @@ import Auth from './components/Auth';
 import Product from './components/Product';
 import AddProduct from './components/AddProduct';
 import ProductDetail from './components/ProductDetail';
-import Materials from './components/Materials';
+import Material from './components/Material';
 import {Route, Routes} from 'react-router-dom'
 
 
@@ -22,7 +22,7 @@ function App() {
             <Route path="/proizvodi" element={<Product/>}/>
             <Route path="/proizvodi/dodaj" element={<AddProduct/>}/>
             <Route path="/proizvodi/detalji" element={<ProductDetail/>}/>
-            <Route path="/sirovine" element={<Materials/>}/>
+            <Route path="/sirovine" element={<Material/>}/>
         </Routes>
       </main>
     </React.Fragment>

@@ -4,25 +4,26 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 
-const Materials=({name,quantity,price, minQuantity, isUsed, unitOfMeasure, supplier}) =>{
-  console.log(supplier)
+const Materials=({name, jib, pdv,phoneNumber, contactPerson, email, dateOfStart, dateOfEnd,materials}) =>{
   return (
     <div>
+        
     <Card sx={{ width: "30%", marginLeft:'20px',mt:2,padding:2,boxShadow:"10px 10px 20px #ccc", ":hover:":{
         boxShadow:"10px 10px 20px #ccc",
     }}}>
       <CardContent>
         <Typography variant="body2" color="text.primary" align='center' fontWeight="bold">
-        Naziv sirovine: {name}
+        Naziv dobavljaca: {name}
        </Typography>
        </CardContent>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-         Cijena proizvoda: {price} KM
-         Kolicina: {quantity}
-         Minimalna kolicina: {minQuantity}
-         Jedinica mjere: {unitOfMeasure}
-         Dobavljac: {supplier?.name}  
+         Jedinstveni identifikacioni broj: {jib} KM
+         PDV broj: {pdv}
+         Broj telefona: {phoneNumber}
+         Email adresa: {email}
+         Kontakt osoba: {contactPerson}
+         Datum pocetka: {dateOfStart}
         </Typography>
       </CardContent>
       

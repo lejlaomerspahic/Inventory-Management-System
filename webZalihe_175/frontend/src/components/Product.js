@@ -20,7 +20,7 @@ function Product() {
   console.log(proizvodi);
   return (
     <div>
-    {proizvodi && proizvodi.map((proizvod, index)=>
+    {proizvodi && proizvodi.map((proizvod)=>
     <Products 
     name={proizvod.name} 
     picURL={proizvod.picURL} 

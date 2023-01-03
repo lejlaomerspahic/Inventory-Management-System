@@ -25,31 +25,11 @@ const Header = () => {
               onChange={(e, val) => setValue(val)}
             >
               <Tab LinkComponent={Link} to="/sirovine" label="Sirovine"></Tab>
+              <Tab LinkComponent={Link} to="/proizvodi/dodaj" label="Dodaj proizvod"></Tab>
             </Tabs>
           </Box>
         )}
 
-        {!isLoggedIn && (
-          <>
-            <Box display="flex" marginLeft="auto">
-              <Button
-              
-                variant="contained"
-                sx={{ margin: 1, borderRadius: 10 }}
-                color="info"
-              >
-                Prijavi se
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ margin: 1, borderRadius: 10 }}
-                color="info"
-              >
-                Registruj se
-              </Button>
-            </Box>
-          </>
-        )}
 
         {isLoggedIn && (
           <Box display="flex" marginLeft="auto">

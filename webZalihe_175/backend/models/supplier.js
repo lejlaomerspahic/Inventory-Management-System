@@ -7,7 +7,7 @@ const supplierSchema=new Schema({
         type: String,
         required: true,
       },
-    uin:  {
+    jib:  {
         type: String,
         required: true,
       },
@@ -33,7 +33,6 @@ const supplierSchema=new Schema({
     },
     dateOfEnd: {
       type: Date,
-      required: true,
     },
     materials: [
       {
