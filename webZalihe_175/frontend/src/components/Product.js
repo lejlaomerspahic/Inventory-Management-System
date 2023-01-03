@@ -20,12 +20,16 @@ function Product() {
   console.log(proizvodi);
   return (
     <div>
-    {proizvodi && proizvodi.map((proizvod)=>
-    <Products 
-    name={proizvod.name} 
-    picURL={proizvod.picURL} 
-    price={proizvod.price}/>)}
-  </div>
+      {proizvodi &&
+        proizvodi.map((proizvod) => (
+          <Products
+            id={proizvod._id}
+            name={proizvod.name}
+            picURL={proizvod.picURL}
+            price={proizvod.price}
+          />
+        ))}
+    </div>
   );
 }
 
