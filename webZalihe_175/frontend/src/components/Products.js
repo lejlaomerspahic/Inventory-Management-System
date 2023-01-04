@@ -4,13 +4,21 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, Button, IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
-const Products = ({ name, picURL, price, id }) => {
+const Products = ({
+  name,
+  picURL,
+  price,
+  id,
+  productionProcess,
+  profitMargin,
+}) => {
   const navigate = useNavigate();
+
   const handleEdit = (e) => {
-    navigate(`proizvodi/${id}`);
+    navigate(`/proizvodi/${id}`);
   };
+
   return (
     <div>
       <Card
@@ -26,8 +34,31 @@ const Products = ({ name, picURL, price, id }) => {
           },
         }}
       >
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="text.primary"
+            align="center"
+            fontWeight="bold"
+          >
+            Name: {name}
+          </Typography>
+        </CardContent>
+        <CardMedia component="img" height="194" image={picURL} />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            Price: {price} KM{" "}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Profit margin: {profitMargin}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Production process: {productionProcess?.id}
+          </Typography>
+        </CardContent>
         <Box display="flex" marginLeft="auto">
           <Button
+            align="center"
             variant="contained"
             sx={{ margin: 1, borderRadius: 10 }}
             color="info"
@@ -36,23 +67,6 @@ const Products = ({ name, picURL, price, id }) => {
             Edit
           </Button>
         </Box>
-        <CardContent>
-          <Typography
-            variant="body2"
-            color="text.primary"
-            align="center"
-            fontWeight="bold"
-          >
-            Naziv proizvoda: {name}
-          </Typography>
-        </CardContent>
-
-        <CardMedia component="img" height="194" image={picURL} />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Cijena proizvoda: {price} KM
-          </Typography>
-        </CardContent>
       </Card>
     </div>
   );

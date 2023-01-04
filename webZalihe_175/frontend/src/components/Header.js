@@ -3,11 +3,19 @@ import { AppBar, Button, Toolbar, Box, Tab, Tabs } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = (name, password, id) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [value, setValue] = useState(0);
+
+  const navigate = useNavigate();
+
+  const handleEdit = (e) => {
+    navigate(`/user/${id}`);
+  };
+
   return (
     <AppBar
       position="sticky"
@@ -25,17 +33,21 @@ const Header = () => {
               onChange={(e, val) => setValue(val)}
             >
               <Tab LinkComponent={Link} to="/sirovine" label="Sirovine"></Tab>
-              <Tab LinkComponent={Link} to="/proizvodi/dodaj" label="Dodaj proizvod"></Tab>
+              <Tab
+                LinkComponent={Link}
+                to="/proizvodi/dodaj"
+                label="Dodaj proizvod"
+              ></Tab>
             </Tabs>
           </Box>
         )}
-
 
         {isLoggedIn && (
           <Box display="flex" marginLeft="auto">
             <Button
               variant="contained"
               sx={{ margin: 1, borderRadius: 10 }}
+              onClick={handleEdit}
               color="info"
             >
               Promijeni šifru

@@ -27,6 +27,8 @@ function Product() {
             name={proizvod.name}
             picURL={proizvod.picURL}
             price={proizvod.price}
+            profitMargin={proizvod.profitMargin}
+            productionProcess={proizvod.productionProcess}
           />
         ))}
     </div>

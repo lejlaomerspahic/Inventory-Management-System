@@ -36,6 +36,7 @@ function Auth() {
     e.preventDefault();
     console.log(inputs);
     sendRequest()
+      .then((data) => localStorage.setItem("userId", data.user._id))
       .then(() => dispatch(authActions.login()))
       .then(() => navigate("/proizvodi"))
       .then((data) => console.log(data));

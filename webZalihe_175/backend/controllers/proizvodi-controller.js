@@ -14,12 +14,13 @@ export const getAllProducts = async (req, res, next) => {
 };
 
 export const addProducts = async (req, res, next) => {
-  const { name, picURL, price, profitMargin } = req.body;
+  const { name, picURL, price, profitMargin, productionProcess } = req.body;
   const product1 = new product({
     name,
     picURL,
     price,
     profitMargin,
+    productionProcess,
   });
   try {
     await product1.save();
@@ -30,7 +31,7 @@ export const addProducts = async (req, res, next) => {
 };
 
 export const updateProducts = async (req, res, next) => {
-  const { name, picURL, price, profitMargin } = req.body;
+  const { name, picURL, price, profitMargin, productionProcess } = req.body;
   const productId = req.params.id;
   let product1;
   try {
@@ -39,6 +40,7 @@ export const updateProducts = async (req, res, next) => {
       picURL,
       price,
       profitMargin,
+      productionProcess,
     });
   } catch (err) {
     return console.log(err);

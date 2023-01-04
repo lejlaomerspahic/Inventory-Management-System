@@ -12,7 +12,6 @@ const Materials = ({
   unitOfMeasure,
   supplier,
 }) => {
-  console.log(supplier);
   return (
     <div>
       <Card
@@ -39,9 +38,18 @@ const Materials = ({
         </CardContent>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Cijena proizvoda: {price} KM Kolicina: {quantity}
+            Cijena proizvoda: {price} KM
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Kolicina: {quantity}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Minimalna kolicina: {minQuantity}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Jedinica mjere: {unitOfMeasure}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Dobavljac: {supplier?.name}
           </Typography>
         </CardContent>

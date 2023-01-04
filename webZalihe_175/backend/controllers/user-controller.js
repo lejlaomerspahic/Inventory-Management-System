@@ -1,4 +1,3 @@
-
 import user from "../models/user";
 
 import bcrypt from "bcryptjs";
@@ -32,8 +31,8 @@ export const signup = async (req, res, next) => {
   const User = new user({
     name,
     password: hashedPassword,
-    role, 
-    employee
+    role,
+    employee,
   });
 
   try {
@@ -64,5 +63,39 @@ export const login = async (req, res, next) => {
       message: "Incorrect Password",
     });
   }
-  return res.status(200).json({ message: "Login successfull", user: existingUser});
+  return res
+    .status(200)
+    .json({ message: "Login successfull", user: existingUser });
+};
+
+export const getById = async (req, res, next) => {
+  const id = req.params.id;
+  let user1;
+  try {
+    user1 = await user.findById(id);
+  } catch (err) {
+    return console.log(err);
+  }
+  if (!user1) {
+    return res.status(404).json({ message: "No user found" });
+  }
+  return res.status(200).json({ user1 });
+};
+
+export const updateUser = async (req, res, next) => {
+  const { name, password } = req.body;
+  const userId = req.params.id;
+  let user1;
+  try {
+    user1 = await user.findByIdAndUpdate(userId, {
+      name,
+      password,
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+  if (!user1) {
+    return res.status(500).json({ message: "Unable to update the user" });
+  }
+  return res.status(200).json({ user1 });
 };
