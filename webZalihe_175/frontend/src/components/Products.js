@@ -64,6 +64,9 @@ const Products = ({
             color="info"
             onClick={handleEdit}
           >
+            <IconButton>
+              <EditIcon></EditIcon>
+            </IconButton>
             Edit
           </Button>
         </Box>
