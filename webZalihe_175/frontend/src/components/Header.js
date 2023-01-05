@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 
-const Header = (name, password, id) => {
+const Header = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [value, setValue] = useState(0);
@@ -13,9 +13,10 @@ const Header = (name, password, id) => {
   const navigate = useNavigate();
 
   const handleEdit = (e) => {
+    const id = localStorage.getItem("userId");
     navigate(`/user/${id}`);
   };
-
+  console.log(isLoggedIn);
   return (
     <AppBar
       position="sticky"

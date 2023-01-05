@@ -3,9 +3,8 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
 const Products = ({
   name,
   picURL,
@@ -65,9 +64,6 @@ const Products = ({
             color="info"
             onClick={handleEdit}
           >
-            <IconButton>
-              <EditIcon></EditIcon>
-            </IconButton>
             Edit
           </Button>
         </Box>

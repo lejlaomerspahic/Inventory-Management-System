@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/", getAllUser);
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/uredi/:id", updateUser);
+router.put("/uredi/:id", updateUser);
 router.get("/:id", getById);
 
 export default router;

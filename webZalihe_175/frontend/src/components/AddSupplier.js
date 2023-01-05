@@ -4,14 +4,16 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
-function AddProduct() {
+function AddMaterial() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
-    picURL: "",
     price: "",
-    profitMargin: "",
-    productionProcess: "",
+    quantity: "",
+    minQuantity: "",
+    isUsed: "",
+    unitOfMeasure: "",
+    supplier: "",
   });
 
   const handeChange = (e) => {
@@ -22,12 +24,14 @@ function AddProduct() {
   };
   const sendRequest = async () => {
     const res = await axios
-      .post("http://localhost:8082/api/proizvodi/dodaj", {
+      .post("http://localhost:8082/api/sirovine/dodaj", {
         name: inputs.name,
-        picURL: inputs.picURL,
         price: inputs.price,
-        profitMargin: inputs.profitMargin,
-        productionProcess: inputs.productionProcess,
+        quantity: inputs.quantity,
+        minQuantity: inputs.minQuantity,
+        isUsed: inputs.isUsed,
+        unitOfMeasure: inputs.unitOfMeasure,
+        supplier: inputs.supplier,
       })
       .catch((err) => console.log(err));
     const data = await res.data;
@@ -37,7 +41,7 @@ function AddProduct() {
     e.preventDefault();
     console.log(inputs);
     sendRequest()
-      .then(() => navigate("/proizvodi"))
+      .then(() => navigate("/sirovine"))
       .then((data) => console.log(data));
   };
   return (
@@ -63,7 +67,7 @@ function AddProduct() {
             variant="h3"
             textAlign={"center"}
           >
-            Post product
+            Post material
           </Typography>
           <InputLabel sx={labelStyles}>Name</InputLabel>
           <TextField
@@ -73,7 +77,7 @@ function AddProduct() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>picURL</InputLabel>
+          <InputLabel sx={labelStyles}>Price</InputLabel>
           <TextField
             onChange={handeChange}
             name="picURL"
@@ -81,27 +85,43 @@ function AddProduct() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Price</InputLabel>
+          <InputLabel sx={labelStyles}>Quantity</InputLabel>
           <TextField
             onChange={handeChange}
-            name="price"
-            value={inputs.price}
+            name="quantity"
+            value={inputs.quantity}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Profit Margin</InputLabel>
+          <InputLabel sx={labelStyles}>Min quantity</InputLabel>
           <TextField
             onChange={handeChange}
-            name="profitMargin"
-            value={inputs.profitMargin}
+            name="minQuantity"
+            value={inputs.minQuantity}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>ProductionProcess</InputLabel>
+          <InputLabel sx={labelStyles}>Is used</InputLabel>
           <TextField
             onChange={handeChange}
-            name="productionProcess"
-            value={inputs.productionProcess}
+            name="isUsed"
+            value={inputs.isUsed}
+            margin="auto"
+            variant="outlined"
+          ></TextField>
+          <InputLabel sx={labelStyles}>Unit of measure</InputLabel>
+          <TextField
+            onChange={handeChange}
+            name="unitOfMeasure"
+            value={inputs.unitOfMeasure}
+            margin="auto"
+            variant="outlined"
+          ></TextField>
+          <InputLabel sx={labelStyles}>Supplier</InputLabel>
+          <TextField
+            onChange={handeChange}
+            name="supplier"
+            value={inputs.supplier}
             margin="auto"
             variant="outlined"
           ></TextField>
@@ -118,4 +138,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default AddMaterial;

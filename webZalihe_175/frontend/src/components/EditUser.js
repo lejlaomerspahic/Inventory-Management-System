@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store";
 
 function EditUser() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
   const [user, setUser] = useState({});
-
+  const dispatch = useDispatch();
   const id = localStorage.getItem("userId");
   console.log(id);
 
@@ -26,7 +27,6 @@ function EditUser() {
       .catch((err) => console.log(err));
 
     const data = await res.data;
-    console.log(data.user1);
     return data;
   };
 
@@ -47,14 +47,17 @@ function EditUser() {
         password: inputs.password,
       })
       .catch((err) => console.log(err));
+
     const data = await res.data;
     return data;
   };
+
   const handleSumbit = (e) => {
     e.preventDefault();
     sendRequest()
       .then((data) => console.log(data))
-      .then(() => navigate("/login"));
+      .then(() => dispatch(authActions.logout()))
+      .then(() => navigate("/"));
   };
 
   console.log(inputs);

@@ -14,13 +14,15 @@ export const getAllMaterials = async (req, res, next) => {
 };
 
 export const addMaterials = async (req, res, next) => {
-  const { name,
+  const {
+    name,
     quantity,
     minQuantity,
     price,
     unitOfMeasure,
     isUsed,
-    supplier } = req.body;
+    supplier,
+  } = req.body;
   const material1 = new material({
     name,
     quantity,
@@ -28,7 +30,7 @@ export const addMaterials = async (req, res, next) => {
     price,
     unitOfMeasure,
     isUsed,
-    supplier
+    supplier,
   });
   try {
     await material1.save();
@@ -39,24 +41,26 @@ export const addMaterials = async (req, res, next) => {
 };
 
 export const updateMaterials = async (req, res, next) => {
-  const { name,
+  const {
+    name,
     quantity,
     minQuantity,
     price,
     unitOfMeasure,
     isUsed,
-    supplier } = req.body;
+    supplier,
+  } = req.body;
   const materialId = req.params.id;
   let material1;
   try {
     material1 = await material.findByIdAndUpdate(materialId, {
-        name,
-        quantity,
-        minQuantity,
-        price,
-        unitOfMeasure,
-        isUsed,
-        supplier
+      name,
+      quantity,
+      minQuantity,
+      price,
+      unitOfMeasure,
+      isUsed,
+      supplier,
     });
   } catch (err) {
     return console.log(err);

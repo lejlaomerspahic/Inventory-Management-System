@@ -2,7 +2,8 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const Materials = ({
   name,
   quantity,
@@ -11,7 +12,14 @@ const Materials = ({
   isUsed,
   unitOfMeasure,
   supplier,
+  id,
 }) => {
+  const navigate = useNavigate();
+
+  const handleEdit = (e) => {
+    navigate(`/sirovine/${id}`);
+  };
+
   return (
     <div>
       <Card
@@ -50,8 +58,19 @@ const Materials = ({
             Jedinica mjere: {unitOfMeasure}
           </Typography>
           <Typography variant="body2" color="text.secondary">
+            Koristi se: {isUsed}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Dobavljac: {supplier?.name}
           </Typography>
+          <Button
+            variant="contained"
+            sx={{ marginTop: 2, borderRadius: 10 }}
+            color="info"
+            onClick={handleEdit}
+          >
+            Edit
+          </Button>
         </CardContent>
       </Card>
     </div>
