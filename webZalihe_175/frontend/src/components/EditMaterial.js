@@ -22,6 +22,7 @@ function EditMaterial() {
 
   const navigate = useNavigate();
   const [inputs, setInputs] = useState();
+
   const handeChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -169,13 +170,11 @@ function EditMaterial() {
             <InputLabel sx={labelStyles}>Supplier</InputLabel>
             <Select
               name="supplier"
-              value={supplierList}
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
+              onChange={handeChange}
+              value={inputs.supplier}
             >
               {supplierList.map((suppliers) => (
-                <MenuItem key={suppliers.id} value={suppliers.id}>
+                <MenuItem key={suppliers._id} value={suppliers._id}>
                   {suppliers.name}
                 </MenuItem>
               ))}

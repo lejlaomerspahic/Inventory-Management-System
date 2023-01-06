@@ -153,11 +153,11 @@ function EditSupplier() {
               margin="auto"
               variant="outlined"
             ></TextField>
-            <InputLabel sx={labelStyles}>Date Of Start</InputLabel>
+            <InputLabel sx={labelStyles}>Date Of End</InputLabel>
             <TextField
               onChange={handeChange}
-              name="dateOfStart"
-              value={inputs.dateOfStart}
+              name="dateOfEnd"
+              value={inputs.dateOfEnd}
               margin="auto"
               variant="outlined"
             ></TextField>

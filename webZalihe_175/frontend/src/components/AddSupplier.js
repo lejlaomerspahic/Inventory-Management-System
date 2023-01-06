@@ -4,16 +4,18 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
-function AddMaterial() {
+function AddSupplier() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
-    price: "",
-    quantity: "",
-    minQuantity: "",
-    isUsed: "",
-    unitOfMeasure: "",
-    supplier: "",
+    jib: "",
+    pdv: "",
+    phoneNumber: "",
+    contactPerson: "",
+    email: "",
+    dateOfStart: "",
+    dateOfEnd: "",
+    suppliers: "",
   });
 
   const handeChange = (e) => {
@@ -24,14 +26,16 @@ function AddMaterial() {
   };
   const sendRequest = async () => {
     const res = await axios
-      .post("http://localhost:8082/api/sirovine/dodaj", {
+      .post("http://localhost:8082/api/dobavljaci/dodaj", {
         name: inputs.name,
-        price: inputs.price,
-        quantity: inputs.quantity,
-        minQuantity: inputs.minQuantity,
-        isUsed: inputs.isUsed,
-        unitOfMeasure: inputs.unitOfMeasure,
-        supplier: inputs.supplier,
+        jib: inputs.jib,
+        pdv: inputs.pdv,
+        phoneNumber: inputs.phoneNumber,
+        contactPerson: inputs.contactPerson,
+        email: inputs.email,
+        dateOfStart: inputs.dateOfStart,
+        dateOfEnd: inputs.dateOfEnd,
+        suppliers: inputs.suppliers,
       })
       .catch((err) => console.log(err));
     const data = await res.data;
@@ -41,7 +45,7 @@ function AddMaterial() {
     e.preventDefault();
     console.log(inputs);
     sendRequest()
-      .then(() => navigate("/sirovine"))
+      .then(() => navigate("/dobavljaci"))
       .then((data) => console.log(data));
   };
   return (
@@ -67,7 +71,7 @@ function AddMaterial() {
             variant="h3"
             textAlign={"center"}
           >
-            Post material
+            Post supplier
           </Typography>
           <InputLabel sx={labelStyles}>Name</InputLabel>
           <TextField
@@ -77,51 +81,67 @@ function AddMaterial() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Price</InputLabel>
+          <InputLabel sx={labelStyles}>jib</InputLabel>
           <TextField
             onChange={handeChange}
-            name="picURL"
-            value={inputs.picURL}
+            name="jib"
+            value={inputs.jib}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Quantity</InputLabel>
+          <InputLabel sx={labelStyles}>pdv</InputLabel>
           <TextField
             onChange={handeChange}
-            name="quantity"
-            value={inputs.quantity}
+            name="pdv"
+            value={inputs.pdv}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Min quantity</InputLabel>
+          <InputLabel sx={labelStyles}>Phone Number</InputLabel>
           <TextField
             onChange={handeChange}
-            name="minQuantity"
-            value={inputs.minQuantity}
+            name="phoneNumber"
+            value={inputs.phoneNumber}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Is used</InputLabel>
+          <InputLabel sx={labelStyles}>Contact person</InputLabel>
           <TextField
             onChange={handeChange}
-            name="isUsed"
-            value={inputs.isUsed}
+            name="contactPerson"
+            value={inputs.contactPerson}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Unit of measure</InputLabel>
+          <InputLabel sx={labelStyles}>Email</InputLabel>
           <TextField
             onChange={handeChange}
-            name="unitOfMeasure"
-            value={inputs.unitOfMeasure}
+            name="email"
+            value={inputs.email}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Supplier</InputLabel>
+          <InputLabel sx={labelStyles}>Date Of Start</InputLabel>
           <TextField
             onChange={handeChange}
-            name="supplier"
-            value={inputs.supplier}
+            name="dateOfStart"
+            value={inputs.dateOfStart}
+            margin="auto"
+            variant="outlined"
+          ></TextField>
+          <InputLabel sx={labelStyles}>Date Of End</InputLabel>
+          <TextField
+            onChange={handeChange}
+            name="dateOfEnd"
+            value={inputs.dateOfEnd}
+            margin="auto"
+            variant="outlined"
+          ></TextField>
+          <InputLabel sx={labelStyles}>Materials</InputLabel>
+          <TextField
+            onChange={handeChange}
+            name="materials"
+            value={inputs.materials}
             margin="auto"
             variant="outlined"
           ></TextField>
@@ -138,4 +158,4 @@ function AddMaterial() {
   );
 }
 
-export default AddMaterial;
+export default AddSupplier;
