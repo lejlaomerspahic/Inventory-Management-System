@@ -3,7 +3,7 @@ import product from "../models/product";
 export const getAllProducts = async (req, res, next) => {
   let products;
   try {
-    products = await product.find();
+    products = await product.find().populate("productionProcess");
   } catch (err) {
     return console.log(err);
   }

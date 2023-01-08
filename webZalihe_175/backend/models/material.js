@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const Schema =mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const materialSchema=new Schema({
+const materialSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -30,7 +30,13 @@ const materialSchema=new Schema({
   supplier: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Supplier",
-  }
+  },
+  productionProcessItems: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductionProcessItem",
+    },
+  ],
 });
 
 export default mongoose.model("Material", materialSchema);

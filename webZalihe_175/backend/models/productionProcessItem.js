@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
-const Schema =mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const productionProcessItemScheme=new Schema({
-  quantity: { 
+const productionProcessItemScheme = new Schema({
+  quantity: {
     type: Number,
     required: true,
+  },
+  material: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Material",
   },
   productionProcesses: [
     {
@@ -16,4 +20,6 @@ const productionProcessItemScheme=new Schema({
 });
 
 export default mongoose.model(
-  "ProductionProcessItem",productionProcessItemScheme);
+  "ProductionProcessItem",
+  productionProcessItemScheme
+);

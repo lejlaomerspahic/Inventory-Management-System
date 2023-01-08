@@ -13,6 +13,7 @@ import EditMaterial from "./components/EditMaterial";
 import Supplier from "./components/Supplier";
 import AddSupplier from "./components/AddSupplier";
 import EditSupplier from "./components/EditSupplier";
+import ProductionProcess from "./components/ProductionProcess";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/proizvodi" element={<Product />} />
           <Route path="/sirovine" element={<Material />} />
           <Route path="/dobavljaci" element={<Supplier />} />
+          <Route path="/proizvodniProces" element={<ProductionProcess />} />
 
           <Route path="/proizvodi/dodaj" element={<AddProduct />} />
           <Route path="/sirovine/dodaj" element={<AddMaterial />} />

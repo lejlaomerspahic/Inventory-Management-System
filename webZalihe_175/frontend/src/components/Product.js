@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Products from "./Products";
+
 function Product() {
   const [proizvodi, setProizvodi] = useState([]);
   const sendRequest = async () => {

@@ -39,6 +39,11 @@ const Header = () => {
                 to="/proizvodi/dodaj"
                 label="Dodaj proizvod"
               ></Tab>
+              <Tab
+                LinkComponent={Link}
+                to="/proizvodniProces"
+                label="Pregledaj proizvodne procese"
+              ></Tab>
             </Tabs>
           </Box>
         )}

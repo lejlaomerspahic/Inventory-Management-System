@@ -1,9 +1,11 @@
 import productionProcess from "../models/productionProcess";
 
-export const getAllproductionProcesss = async (req, res, next) => {
+export const getAllproductionProccess = async (req, res, next) => {
   let productionProcesss;
   try {
-    productionProcesss = await productionProcess.find();
+    productionProcesss = await productionProcess
+      .find()
+      .populate("productionProcessItems");
   } catch (err) {
     return console.log(err);
   }
@@ -13,8 +15,16 @@ export const getAllproductionProcesss = async (req, res, next) => {
   return res.status(200).json({ productionProcesss });
 };
 
-export const addproductionProcesss = async (req, res, next) => {
-  const { name,quantity,startDate,endDate,price,products,productionProcessItems } = req.body;
+export const addproductionProcess = async (req, res, next) => {
+  const {
+    name,
+    quantity,
+    startDate,
+    endDate,
+    price,
+    products,
+    productionProcessItems,
+  } = req.body;
   const productionProcess1 = new productionProcess({
     name,
     quantity,
@@ -22,7 +32,7 @@ export const addproductionProcesss = async (req, res, next) => {
     endDate,
     price,
     products,
-    productionProcessItems
+    productionProcessItems,
   });
   try {
     await productionProcess1.save();
@@ -32,25 +42,38 @@ export const addproductionProcesss = async (req, res, next) => {
   return res.status(200).json({ productionProcess1 });
 };
 
-export const updateproductionProcesss = async (req, res, next) => {
-  const { name,quantity,startDate,endDate,price,products,productionProcessItems  } = req.body;
-  const productionProcessId = req.params.id;
-  let productionProcess1;
-  try {
-    productionProcess1 = await productionProcess.findByIdAndUpdate(productionProcessId, {
+export const updateproductionProcess = async (req, res, next) => {
+  const {
     name,
     quantity,
     startDate,
     endDate,
     price,
     products,
-    productionProcessItems
-    });
+    productionProcessItems,
+  } = req.body;
+  const productionProcessId = req.params.id;
+  let productionProcess1;
+  try {
+    productionProcess1 = await productionProcess.findByIdAndUpdate(
+      productionProcessId,
+      {
+        name,
+        quantity,
+        startDate,
+        endDate,
+        price,
+        products,
+        productionProcessItems,
+      }
+    );
   } catch (err) {
     return console.log(err);
   }
   if (!productionProcess1) {
-    return res.status(500).json({ message: "Unable to update the productionProcess" });
+    return res
+      .status(500)
+      .json({ message: "Unable to update the productionProcess" });
   }
   return res.status(200).json({ productionProcess1 });
 };
