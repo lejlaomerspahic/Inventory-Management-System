@@ -16,30 +16,30 @@ export const getAllproductionProccess = async (req, res, next) => {
 };
 
 export const addproductionProcess = async (req, res, next) => {
-  const {
-    name,
-    quantity,
-    startDate,
-    endDate,
-    price,
-    products,
-    productionProcessItems,
-  } = req.body;
+  const { name, startDate, endDate, productionProcessItems } = req.body;
   const productionProcess1 = new productionProcess({
     name,
-    quantity,
     startDate,
     endDate,
-    price,
-    products,
-    productionProcessItems,
+    productionProcessItems: productionProcessItems,
   });
   try {
-    await productionProcess1.save();
+    const Item = await (
+      await productionProcess1.save()
+    ).populate({
+      path: "productionProcessItems",
+      populate: { path: "material" },
+    });
+    let price = 0;
+    Item.productionProcessItems.map(
+      (item) => (price += item.quantity * item.material.price)
+    );
+    Item.price = price;
+    await Item.save();
+    return res.status(200).json({ Item });
   } catch (err) {
     return console.log(err);
   }
-  return res.status(200).json({ productionProcess1 });
 };
 
 export const updateproductionProcess = async (req, res, next) => {

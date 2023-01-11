@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const Schema =mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const ProductionProcess=new Schema({
+const ProductionProcess = new Schema({
   name: {
     type: String,
     required: true,
@@ -17,7 +17,6 @@ const ProductionProcess=new Schema({
   },
   price: {
     type: Number,
-    required: true,
   },
   products: [
     {

@@ -1,9 +1,16 @@
 import product from "../models/product";
+import ProductionProcess from "../models/productionProcess";
 
 export const getAllProducts = async (req, res, next) => {
   let products;
   try {
-    products = await product.find().populate("productionProcess");
+    products = await product.find().populate({
+      path: "productionProcess",
+      populate: {
+        path: "productionProcessItems",
+        populate: { path: "material", populate: { path: "supplier" } },
+      },
+    });
   } catch (err) {
     return console.log(err);
   }
@@ -14,20 +21,33 @@ export const getAllProducts = async (req, res, next) => {
 };
 
 export const addProducts = async (req, res, next) => {
-  const { name, picURL, price, profitMargin, productionProcess } = req.body;
+  const { name, picURL, profitMargin, productionProcess } = req.body;
   const product1 = new product({
     name,
     picURL,
-    price,
     profitMargin,
     productionProcess,
   });
   try {
-    await product1.save();
+    const Process = await (
+      await product1.save()
+    ).populate({
+      path: "productionProcess",
+      populate: {
+        path: "productionProcessItems",
+        populate: { path: "material", populate: { path: "supplier" } },
+      },
+    });
+
+    const foundProcess = await ProductionProcess.findById(productionProcess);
+    let price = 0;
+    price += ((100 - profitMargin) / 100) * foundProcess.price;
+    Process.price = price;
+    await Process.save();
+    return res.status(200).json({ Process });
   } catch (err) {
     return console.log(err);
   }
-  return res.status(200).json({ product1 });
 };
 
 export const updateProducts = async (req, res, next) => {

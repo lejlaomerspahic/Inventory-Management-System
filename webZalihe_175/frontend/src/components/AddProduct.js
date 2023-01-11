@@ -9,7 +9,6 @@ function AddProduct() {
   const [inputs, setInputs] = useState({
     name: "",
     picURL: "",
-    price: "",
     profitMargin: "",
     productionProcess: "",
   });
@@ -25,7 +24,6 @@ function AddProduct() {
       .post("http://localhost:8082/api/proizvodi/dodaj", {
         name: inputs.name,
         picURL: inputs.picURL,
-        price: inputs.price,
         profitMargin: inputs.profitMargin,
         productionProcess: inputs.productionProcess,
       })
