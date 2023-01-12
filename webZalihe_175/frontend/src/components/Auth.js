@@ -4,42 +4,30 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
-
 function Auth() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [inputs, setInputs] = useState({
-    name: "",
-    password: "",
-  });
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  const sendRequest = async (type = "login") => {
-    const res = await axios
-      .post(`http://localhost:8082/api/user/${type}`, {
-        name: inputs.name,
-        password: inputs.password,
+  const handleSubmit = async (e) => {
+    const credentials = {
+      name,
+      password,
+    };
+    e.preventDefault();
+    await axios
+      .post("http://localhost:8082/api/user/login", credentials)
+      .then((response) => {
+        if (response.data.user.role === "admin") {
+          navigate("/sirovine");
+          dispatch(authActions.login());
+        } else if (response.data.user.role === "zaposlenik") {
+          navigate("/proizvodi");
+          dispatch(authActions.login());
+        }
       })
       .catch((err) => console.log(err));
-
-    const data = await res.data;
-    console.log(data);
-    return data;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(inputs);
-    sendRequest()
-      .then((data) => localStorage.setItem("userId", data.user._id))
-      .then(() => dispatch(authActions.login()))
-      .then(() => navigate("/proizvodi"))
-      .then((data) => console.log(data));
   };
 
   return (
@@ -63,8 +51,7 @@ function Auth() {
           <TextField
             name="name"
             type={"name"}
-            onChange={handleChange}
-            value={inputs.name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Name"
             padding={2}
             margin="normal"
@@ -73,8 +60,7 @@ function Auth() {
           <TextField
             name="password"
             type={"password"}
-            onChange={handleChange}
-            value={inputs.password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             padding={2}
             margin="normal"

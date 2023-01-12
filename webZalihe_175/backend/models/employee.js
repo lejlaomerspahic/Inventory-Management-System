@@ -1,25 +1,24 @@
 import mongoose from "mongoose";
 
+const Schema = mongoose.Schema;
 
-const Schema =mongoose.Schema; 
-
-const employeeScheme=new Schema({
-  firstName:  {  
+const employeeScheme = new Schema({
+  firstName: {
     type: String,
     required: true,
-},
+  },
   lastName: {
     type: String,
     required: true,
-},
-  phoneNumber:  {
+  },
+  phoneNumber: {
     type: String,
     required: true,
-},
+  },
   email: {
     type: String,
     required: true,
-},
+  },
   dateOfJoin: {
     type: Date,
     required: true,
@@ -27,10 +26,6 @@ const employeeScheme=new Schema({
   dateOfLeave: {
     type: Date,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  }
 });
 
 export default mongoose.model("Employee", employeeScheme);

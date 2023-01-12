@@ -13,13 +13,8 @@ const userSchema = new Schema({
     minlength: 6,
   },
   role: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Role",
-    default: "zaposlenik",
-  },
-  employee: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee",
+    type: String,
+    required: true,
   },
 });
 

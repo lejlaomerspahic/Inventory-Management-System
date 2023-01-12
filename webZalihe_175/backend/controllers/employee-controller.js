@@ -14,14 +14,15 @@ export const getAllemployees = async (req, res, next) => {
 };
 
 export const addemployees = async (req, res, next) => {
-  const { firstName,lastName,phoneNumber, email, dateOfJoin,dateOfLeave} = req.body;
+  const { firstName, lastName, phoneNumber, email, dateOfJoin, dateOfLeave } =
+    req.body;
   const employee1 = new employee({
     firstName,
     lastName,
-    phoneNumber, 
-    email, 
+    phoneNumber,
+    email,
     dateOfJoin,
-    dateOfLeave
+    dateOfLeave,
   });
   try {
     await employee1.save();
@@ -32,18 +33,18 @@ export const addemployees = async (req, res, next) => {
 };
 
 export const updateemployees = async (req, res, next) => {
-  const { firstName,lastName,phoneNumber, email, dateOfJoin,dateOfLeave, user } = req.body;
+  const { firstName, lastName, phoneNumber, email, dateOfJoin, dateOfLeave } =
+    req.body;
   const employeeId = req.params.id;
   let employee1;
   try {
     employee1 = await employee.findByIdAndUpdate(employeeId, {
-        firstName,
-        lastName,
-        phoneNumber, 
-        email, 
-        dateOfJoin,
-        dateOfLeave, 
-        user
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      dateOfJoin,
+      dateOfLeave,
     });
   } catch (err) {
     return console.log(err);
