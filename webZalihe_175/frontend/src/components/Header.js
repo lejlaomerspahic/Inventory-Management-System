@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Header = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   const [value, setValue] = useState(0);
 
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const Header = () => {
     const id = localStorage.getItem("userId");
     navigate(`/user/${id}`);
   };
-  console.log(isLoggedIn);
+
   return (
     <AppBar
       position="sticky"
@@ -26,7 +28,7 @@ const Header = () => {
       }}
     >
       <Toolbar>
-        {isLoggedIn && (
+        {(isLoggedInAdmin || isLoggedIn) && (
           <Box display="flex">
             <Tabs
               textColor="inherit"
@@ -44,11 +46,18 @@ const Header = () => {
                 to="/proizvodniProces"
                 label="Pregledaj proizvodne procese"
               ></Tab>
+              {isLoggedInAdmin && (
+                <Tab
+                  LinkComponent={Link}
+                  to="/zaposlenici"
+                  label="Pregledaj korisnike"
+                ></Tab>
+              )}
             </Tabs>
           </Box>
         )}
 
-        {isLoggedIn && (
+        {(isLoggedInAdmin || isLoggedIn) && (
           <Box display="flex" marginLeft="auto">
             <Button
               variant="contained"

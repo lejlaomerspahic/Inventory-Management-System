@@ -7,6 +7,7 @@ import supplierRouter from "./routes/supplier-routes";
 import cors from "cors";
 import productionProcessRouter from "./routes/productionProcess-routes";
 import productionProcessItemRouter from "./routes/productionProccessItem-routes";
+import routerEmployee from "./routes/employee-routes";
 
 const app = express();
 const port = 8082;
@@ -14,6 +15,7 @@ const port = 8082;
 app.use(cors());
 app.use(express.json());
 app.use("/api/user", router);
+app.use("/api/zaposlenici", routerEmployee);
 app.use("/api/proizvodi", proizvodiRouter);
 app.use("/api/sirovine", materialRouter);
 app.use("/api/dobavljaci", supplierRouter);

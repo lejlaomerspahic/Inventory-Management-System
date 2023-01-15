@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export const getAllUser = async (req, res, next) => {
   let users;
   try {
-    users = await user.find();
+    users = await (await user.find()).populate("employee");
   } catch (err) {
     console.log(err);
   }
@@ -16,7 +16,7 @@ export const getAllUser = async (req, res, next) => {
 };
 
 export const signup = async (req, res, next) => {
-  const { name, password, role } = req.body;
+  const { name, password, role, employee } = req.body;
   let existingUser;
   try {
     existingUser = await user.findOne({ name });
@@ -32,6 +32,7 @@ export const signup = async (req, res, next) => {
     name,
     password: hashedPassword,
     role,
+    employee,
   });
 
   try {
@@ -71,7 +72,7 @@ export const getById = async (req, res, next) => {
   const id = req.params.id;
   let user1;
   try {
-    user1 = await user.findById(id);
+    user1 = await user.findById(id).populate("employee");
   } catch (err) {
     return console.log(err);
   }

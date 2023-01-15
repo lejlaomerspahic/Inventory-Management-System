@@ -20,8 +20,8 @@ function Auth() {
       .post("http://localhost:8082/api/user/login", credentials)
       .then((response) => {
         if (response.data.user.role === "admin") {
-          navigate("/sirovine");
-          dispatch(authActions.login());
+          navigate("/proizvodi");
+          dispatch(authActions.loginAdmin());
         } else if (response.data.user.role === "zaposlenik") {
           navigate("/proizvodi");
           dispatch(authActions.login());
