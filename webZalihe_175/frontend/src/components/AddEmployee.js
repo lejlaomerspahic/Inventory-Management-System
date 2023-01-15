@@ -29,20 +29,23 @@ function AddEmployee() {
           email: inputs.email,
           dateOfJoin: inputs.dateOfJoin,
           dateOfLeave: inputs.dateOfLeave,
+          name: inputs.name,
+          password: inputs.password,
         }
       );
       const employee = employeeRes.data;
-      const userRes = await axios.post(
-        "http://localhost:8082/api/user/signup",
-        {
-          name: inputs.name,
-          password: inputs.password,
-          role: "zaposlenik",
-          employee: employee._id,
-        }
-      );
-      const user = userRes.data;
-      console.log(employee, user);
+      console.log(employee);
+      // const userRes = await axios.post(
+      //   "http://localhost:8082/api/user/signup",
+      //   {
+      //     name: inputs.name,
+      //     password: inputs.password,
+      //     role: "zaposlenik",
+      //     employee: employee._id,
+      //   }
+      // );
+      // const user = userRes.data;
+      // console.log(employee, user);
     } catch (err) {
       console.log(err);
     }

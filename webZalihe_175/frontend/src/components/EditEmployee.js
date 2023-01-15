@@ -23,8 +23,8 @@ function EditEmployee() {
         email: res.data.employee1.email,
         dateOfJoin: res.data.employee1.dateOfJoin,
         dateOfLeave: res.data.employee1.dateOfLeave,
-        name: res.data.employee1.user.name,
-        password: res.data.employee1.user.password,
+        name: res.data.employee1?.user.name,
+        password: res.data.employee1?.user.password,
       });
     };
     fetchData();
