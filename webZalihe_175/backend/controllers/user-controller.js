@@ -5,7 +5,8 @@ import bcrypt from "bcryptjs";
 export const getAllUser = async (req, res, next) => {
   let users;
   try {
-    users = await (await user.find()).populate("employee");
+    users = await user.find({}).populate("employee");
+    // users = await (await user.find()).populate("employee");
   } catch (err) {
     console.log(err);
   }

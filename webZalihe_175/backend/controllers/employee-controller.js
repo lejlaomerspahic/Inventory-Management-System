@@ -1,5 +1,6 @@
 import Employee from "../models/employee";
 import User from "../models/user";
+import bcrypt from "bcryptjs";
 
 export const getAllemployees = async (req, res, next) => {
   let employees;
@@ -15,6 +16,8 @@ export const getAllemployees = async (req, res, next) => {
 };
 
 export const addEmployees = async (req, res, next) => {
+  const hashedPassword = bcrypt.hashSync(req.body.password);
+
   const employee1 = new Employee({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -28,14 +31,15 @@ export const addEmployees = async (req, res, next) => {
     .then((savedEmployee) => {
       const user = new User({
         name: req.body.name,
-        password: req.body.password,
+        password: hashedPassword,
         role: "zaposlenik",
         employee: savedEmployee._id,
       });
       user
         .save()
         .then((user) => {
-          user.employee = savedEmployee._id;
+          employee1.user = user._id;
+          employee1.save();
           res.json(user);
         })
         .catch((err) => res.status(400).json(err));
@@ -56,10 +60,11 @@ export const updateEmployees = async (req, res, next) => {
     employee.email = req.body.email;
     employee.dateOfJoin = req.body.dateOfJoin;
     employee.dateOfLeave = req.body.dateOfLeave;
+    const hashedPassword = bcrypt.hashSync(req.body.password);
 
     const user = await User.findById(employee.user);
     user.name = req.body.name;
-    user.password = req.body.password;
+    user.password = hashedPassword;
 
     await employee.save();
     await user.save();
