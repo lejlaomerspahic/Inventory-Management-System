@@ -44,7 +44,7 @@ function Supplier() {
             email={dobavljaci.email}
             dateOfStart={dobavljaci.dateOfStart}
             dateOfEnd={dobavljaci.dateOfEnd}
-            materials={dobavljaci.materials.id}
+            materials={dobavljaci.materials}
           />
         ))}
     </div>

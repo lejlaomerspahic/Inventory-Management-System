@@ -13,19 +13,18 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
-function AddSupplier() {
+function AddProductionProcess() {
   const navigate = useNavigate();
-  const [materialsList, setMaterialsList] = useState([{ name: "", id: "" }]);
+  const [productList, setProductList] = useState([{ name: "", id: "" }]);
+  const [productionProcessItemsList, setProductionProcessItemsList] = useState([
+    { name: "", id: "" },
+  ]);
   const [inputs, setInputs] = useState({
     name: "",
-    jib: "",
-    pdv: "",
-    phoneNumber: "",
-    contactPerson: "",
-    email: "",
-    dateOfStart: "",
-    dateOfEnd: "",
-    materials: "",
+    startDate: "",
+    endDate: "",
+    products: "",
+    productionProcessItems: "",
   });
 
   const handeChange = (e) => {
@@ -37,11 +36,11 @@ function AddSupplier() {
   const sendRequest = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8082/api/dobavljaci/dodaj",
+        "http://localhost:8082/api/proizvodniProces/dodaj",
         inputs
       );
-      const product = res.data;
-      console.log(product);
+      const productionProcess = res.data;
+      console.log(productionProcess);
     } catch (err) {
       console.log(err);
     }
@@ -51,18 +50,33 @@ function AddSupplier() {
     e.preventDefault();
     console.log(inputs);
     sendRequest()
-      .then(() => navigate("/dobavljaci"))
+      .then(() => navigate("/proizvodniProces"))
       .then((data) => console.log(data));
   };
 
   useEffect(() => {
     const fetch = async () => {
       const res = await axios
-        .get(`http://localhost:8082/api/sirovine`)
+        .get(`http://localhost:8082/api/proizvodi`)
         .catch((err) => console.log(err));
 
       const data = await res.data;
-      setMaterialsList(data.materials);
+      setProductList(data.products);
+      console.log(data.products);
+      return data;
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios
+        .get(`http://localhost:8082/api/proizvodniProcesStavka`)
+        .catch((err) => console.log(err));
+
+      const data = await res.data;
+      setProductionProcessItemsList(data.productionProcessItems);
+      console.log(data.productionProcessItems);
       return data;
     };
     fetch();
@@ -99,7 +113,7 @@ function AddSupplier() {
             variant="h3"
             textAlign={"center"}
           >
-            Post supplier
+            Post production process
           </Typography>
           <InputLabel sx={labelStyles}>Name</InputLabel>
           <TextField
@@ -109,71 +123,48 @@ function AddSupplier() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>jib</InputLabel>
+          <InputLabel sx={labelStyles}>Start Date</InputLabel>
           <TextField
             onChange={handeChange}
-            name="jib"
-            value={inputs.jib}
+            name="startDate"
+            value={inputs.startDate}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>pdv</InputLabel>
+          <InputLabel sx={labelStyles}>End Date</InputLabel>
           <TextField
             onChange={handeChange}
-            name="pdv"
-            value={inputs.pdv}
+            name="endDate"
+            value={inputs.endDate}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Phone Number</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="phoneNumber"
-            value={inputs.phoneNumber}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Contact person</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="contactPerson"
-            value={inputs.contactPerson}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Email</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="email"
-            value={inputs.email}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Date Of Start</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="dateOfStart"
-            value={inputs.dateOfStart}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Date Of End</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="dateOfEnd"
-            value={inputs.dateOfEnd}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Material</InputLabel>
+          <InputLabel sx={labelStyles}>Product</InputLabel>
           <Select
-            name="materials"
+            name="products"
             onChange={handeChange}
-            value={inputs.materials}
+            value={inputs.products}
           >
-            {materialsList.map((materials) => (
-              <MenuItem key={materials._id} value={materials._id}>
-                {materials?.name}
+            {productList.map((product) => (
+              <MenuItem key={product._id} value={product._id}>
+                {product?.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <InputLabel sx={labelStyles}>
+            Production process item [material]
+          </InputLabel>
+          <Select
+            name="productionProcessItems"
+            onChange={handeChange}
+            value={inputs.productionProcessItems}
+          >
+            {productionProcessItemsList.map((productionProcessItem) => (
+              <MenuItem
+                key={productionProcessItem._id}
+                value={productionProcessItem._id}
+              >
+                {productionProcessItem.material?.name}
               </MenuItem>
             ))}
           </Select>
@@ -190,4 +181,4 @@ function AddSupplier() {
   );
 }
 
-export default AddSupplier;
+export default AddProductionProcess;

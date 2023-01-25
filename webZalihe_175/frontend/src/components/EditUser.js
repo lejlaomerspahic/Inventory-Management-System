@@ -4,6 +4,7 @@ import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
+import { useSelector } from "react-redux";
 
 function EditUser() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
@@ -59,6 +60,14 @@ function EditUser() {
       .then(() => dispatch(authActions.logout()))
       .then(() => navigate("/"));
   };
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
 
   console.log(inputs);
   return (

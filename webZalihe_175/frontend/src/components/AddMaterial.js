@@ -1,11 +1,21 @@
-import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
+import {
+  InputLabel,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import axios from "axios";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
 function AddMaterial() {
   const navigate = useNavigate();
+  const [supplierList, setSupplierList] = useState([{ name: "", id: "" }]);
   const [inputs, setInputs] = useState({
     name: "",
     price: "",
@@ -15,6 +25,14 @@ function AddMaterial() {
     unitOfMeasure: "",
     supplier: "",
   });
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
 
   const handeChange = (e) => {
     setInputs((prevState) => ({
@@ -44,6 +62,19 @@ function AddMaterial() {
       .then(() => navigate("/sirovine"))
       .then((data) => console.log(data));
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios
+        .get(`http://localhost:8082/api/dobavljaci`)
+        .catch((err) => console.log(err));
+
+      const data = await res.data;
+      setSupplierList(data.suppliers);
+      return data;
+    };
+    fetch();
+  }, []);
   return (
     <div>
       <form onSubmit={handleSumbit}>
@@ -80,8 +111,8 @@ function AddMaterial() {
           <InputLabel sx={labelStyles}>Price</InputLabel>
           <TextField
             onChange={handeChange}
-            name="picURL"
-            value={inputs.picURL}
+            name="price"
+            value={inputs.price}
             margin="auto"
             variant="outlined"
           ></TextField>
@@ -118,13 +149,17 @@ function AddMaterial() {
             variant="outlined"
           ></TextField>
           <InputLabel sx={labelStyles}>Supplier</InputLabel>
-          <TextField
-            onChange={handeChange}
+          <Select
             name="supplier"
+            onChange={handeChange}
             value={inputs.supplier}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
+          >
+            {supplierList.map((suppliers) => (
+              <MenuItem key={suppliers._id} value={suppliers._id}>
+                {suppliers.name}
+              </MenuItem>
+            ))}
+          </Select>
           <Button
             sx={{ mt: 2, borderRadius: 2 }}
             variant="contained"

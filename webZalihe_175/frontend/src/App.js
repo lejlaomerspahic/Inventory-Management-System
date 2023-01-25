@@ -16,7 +16,10 @@ import AddSupplier from "./components/AddSupplier";
 import EditSupplier from "./components/EditSupplier";
 import ProductionProcess from "./components/ProductionProcess";
 import AddEmployee from "./components/AddEmployee";
+import AddProductionProcess from "./components/AddProductionProcess";
 import EditEmployee from "./components/EditEmployee";
+import ProductionProcessItem from "./components/ProductionProcessItem";
+import AddProductionProcessItems from "./components/AddProductionProcessItems";
 
 function App() {
   return (
@@ -32,11 +35,23 @@ function App() {
           <Route path="/dobavljaci" element={<Supplier />} />
           <Route path="/zaposlenici" element={<Emploeyee />} />
           <Route path="/proizvodniProces" element={<ProductionProcess />} />
+          <Route
+            path="/proizvodniProcesStavka"
+            element={<ProductionProcessItem />}
+          />
 
           <Route path="/proizvodi/dodaj" element={<AddProduct />} />
           <Route path="/sirovine/dodaj" element={<AddMaterial />} />
           <Route path="/dobavljaci/dodaj" element={<AddSupplier />} />
           <Route path="/zaposlenici/dodaj" element={<AddEmployee />} />
+          <Route
+            path="/proizvodniProces/dodaj"
+            element={<AddProductionProcess />}
+          />
+          <Route
+            path="/proizvodniProcesStavka/dodaj"
+            element={<AddProductionProcessItems />}
+          />
 
           <Route path="/proizvodi/:id" element={<EditProduct />} />
           <Route path="/sirovine/:id" element={<EditMaterial />} />

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function EditSupplier() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
@@ -69,6 +70,14 @@ function EditSupplier() {
       .then((data) => console.log(data))
       .then(() => navigate("/dobavljaci"));
   };
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
 
   console.log(inputs);
   return (
@@ -158,14 +167,6 @@ function EditSupplier() {
               onChange={handeChange}
               name="dateOfEnd"
               value={inputs.dateOfEnd}
-              margin="auto"
-              variant="outlined"
-            ></TextField>
-            <InputLabel sx={labelStyles}>Materials</InputLabel>
-            <TextField
-              onChange={handeChange}
-              name="materials"
-              value={inputs.materials}
               margin="auto"
               variant="outlined"
             ></TextField>

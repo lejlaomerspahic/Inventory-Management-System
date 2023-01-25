@@ -13,16 +13,16 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
-function AddProduct() {
+function AddProductionProcessItems() {
   const navigate = useNavigate();
+  const [materialList, setMaterialList] = useState([{ name: "", id: "" }]);
   const [productionProcessList, setProductionProcessList] = useState([
     { name: "", id: "" },
   ]);
   const [inputs, setInputs] = useState({
-    name: "",
-    picURL: "",
-    profitMargin: "",
-    productionProcess: "",
+    quantity: "",
+    material: "",
+    productionProcesses: "",
   });
 
   const handeChange = (e) => {
@@ -34,11 +34,11 @@ function AddProduct() {
   const sendRequest = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8082/api/proizvodi/dodaj",
+        "http://localhost:8082/api/ProizvodniProcesStavka/dodaj",
         inputs
       );
-      const product = res.data;
-      console.log(product);
+      const productionProcessItems = res.data;
+      console.log(productionProcessItems);
     } catch (err) {
       console.log(err);
     }
@@ -48,9 +48,22 @@ function AddProduct() {
     e.preventDefault();
     console.log(inputs);
     sendRequest()
-      .then(() => navigate("/proizvodi"))
+      .then(() => navigate("/proizvodniProces"))
       .then((data) => console.log(data));
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios
+        .get(`http://localhost:8082/api/sirovine`)
+        .catch((err) => console.log(err));
+
+      const data = await res.data;
+      setMaterialList(data.materials);
+      return data;
+    };
+    fetch();
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -96,44 +109,40 @@ function AddProduct() {
             variant="h3"
             textAlign={"center"}
           >
-            Post product
+            Post production process item
           </Typography>
-          <InputLabel sx={labelStyles}>Name</InputLabel>
+          <InputLabel sx={labelStyles}>Quantity</InputLabel>
           <TextField
             onChange={handeChange}
-            name="name"
-            value={inputs.name}
+            name="quantity"
+            value={inputs.quantity}
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>picURL</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="picURL"
-            value={inputs.picURL}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Profit Margin</InputLabel>
-          <TextField
-            onChange={handeChange}
-            name="profitMargin"
-            value={inputs.profitMargin}
-            margin="auto"
-            variant="outlined"
-          ></TextField>
-          <InputLabel sx={labelStyles}>Production Process</InputLabel>
+          <InputLabel sx={labelStyles}>Material</InputLabel>
           <Select
-            name="productionProcess"
+            name="material"
             onChange={handeChange}
-            value={inputs.productionProcess}
+            value={inputs.material}
           >
-            {productionProcessList.map((productionProcesss) => (
+            {materialList.map((material) => (
+              <MenuItem key={material._id} value={material._id}>
+                {material?.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <InputLabel sx={labelStyles}>Production process</InputLabel>
+          <Select
+            name="productionProcesses"
+            onChange={handeChange}
+            value={inputs.productionProcesses}
+          >
+            {productionProcessList.map((productionProcess) => (
               <MenuItem
-                key={productionProcesss._id}
-                value={productionProcesss._id}
+                key={productionProcess._id}
+                value={productionProcess._id}
               >
-                {productionProcesss?.name}
+                {productionProcess?.name}
               </MenuItem>
             ))}
           </Select>
@@ -150,4 +159,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default AddProductionProcessItems;

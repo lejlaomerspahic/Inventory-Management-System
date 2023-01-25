@@ -1,10 +1,10 @@
-import product from "../models/product";
+import Product from "../models/product";
 import ProductionProcess from "../models/productionProcess";
 
 export const getAllProducts = async (req, res, next) => {
   let products;
   try {
-    products = await product.find().populate({
+    products = await Product.find().populate({
       path: "productionProcess",
       populate: {
         path: "productionProcessItems",
@@ -22,7 +22,7 @@ export const getAllProducts = async (req, res, next) => {
 
 export const addProducts = async (req, res, next) => {
   const { name, picURL, profitMargin, productionProcess } = req.body;
-  const product1 = new product({
+  const product1 = new Product({
     name,
     picURL,
     profitMargin,
@@ -35,15 +35,19 @@ export const addProducts = async (req, res, next) => {
       path: "productionProcess",
       populate: {
         path: "productionProcessItems",
-        populate: { path: "material", populate: { path: "supplier" } },
       },
     });
-
     const foundProcess = await ProductionProcess.findById(productionProcess);
     let price = 0;
     price += ((100 - profitMargin) / 100) * foundProcess.price;
-    Process.price = price;
+    let roundPrice = price.toFixed(2);
+    Process.price = roundPrice;
     await Process.save();
+    const updatedProduct = await ProductionProcess.findByIdAndUpdate(
+      productionProcess,
+      { $push: { products: Process._id } },
+      { new: true }
+    );
     return res.status(200).json({ Process });
   } catch (err) {
     return console.log(err);
@@ -51,14 +55,15 @@ export const addProducts = async (req, res, next) => {
 };
 
 export const updateProducts = async (req, res, next) => {
-  const { name, picURL, price, profitMargin, productionProcess } = req.body;
+  const { name, picURL, profitMargin, productionProcess } = req.body;
   const productId = req.params.id;
   let product1;
+  const foundProcess = await ProductionProcess.findById(productionProcess);
   try {
-    product1 = await product.findByIdAndUpdate(productId, {
+    product1 = await Product.findByIdAndUpdate(productId, {
       name,
       picURL,
-      price,
+      price: (((100 - profitMargin) / 100) * foundProcess.price).toFixed(2),
       profitMargin,
       productionProcess,
     });
@@ -75,7 +80,7 @@ export const getById = async (req, res, next) => {
   const id = req.params.id;
   let product1;
   try {
-    product1 = await product.findById(id);
+    product1 = await Product.findById(id);
   } catch (err) {
     return console.log(err);
   }
@@ -90,7 +95,7 @@ export const deleteProduct = async (req, res, next) => {
 
   let product1;
   try {
-    product1 = await product.findByIdAndRemove(id);
+    product1 = await Product.findByIdAndRemove(id);
   } catch (err) {
     return console.log(err);
   }

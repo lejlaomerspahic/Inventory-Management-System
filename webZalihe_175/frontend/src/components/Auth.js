@@ -22,9 +22,11 @@ function Auth() {
         if (response.data.user.role === "admin") {
           navigate("/proizvodi");
           dispatch(authActions.loginAdmin());
+          localStorage.setItem("userId", response.data.user._id);
         } else if (response.data.user.role === "zaposlenik") {
           navigate("/proizvodi");
           dispatch(authActions.login());
+          localStorage.setItem("userId", response.data.user._id);
         }
       })
       .catch((err) => console.log(err));

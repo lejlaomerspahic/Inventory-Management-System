@@ -5,6 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 const Products = ({
   name,
   picURL,
@@ -18,6 +20,14 @@ const Products = ({
   const handleEdit = (e) => {
     navigate(`/proizvodi/${id}`);
   };
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
 
   return (
     <div>
@@ -50,7 +60,7 @@ const Products = ({
             Price: {price} KM{" "}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Profit margin: {profitMargin}
+            Profit margin: {profitMargin}%
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Production process: {productionProcess?.name}

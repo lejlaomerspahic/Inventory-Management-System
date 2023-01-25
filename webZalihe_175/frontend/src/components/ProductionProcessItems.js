@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-const ProductionProcess = ({ name, startDate, endDate, price }) => {
+const ProductionProcessItems = ({ quantity, material }) => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ const ProductionProcess = ({ name, startDate, endDate, price }) => {
       navigate(`/`);
     }
   }, []);
-
   return (
     <div>
       <Card
@@ -30,24 +29,11 @@ const ProductionProcess = ({ name, startDate, endDate, price }) => {
         }}
       >
         <CardContent>
-          <Typography
-            variant="body2"
-            color="text.primary"
-            align="center"
-            fontWeight="bold"
-          >
-            Naziv: {name}
-          </Typography>
-        </CardContent>
-        <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Start date: {startDate}
+            Kolicina: {quantity}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            End date: {endDate}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Price: {price} KM
+            Material: {material?.name}
           </Typography>
         </CardContent>
       </Card>
@@ -55,4 +41,4 @@ const ProductionProcess = ({ name, startDate, endDate, price }) => {
   );
 };
 
-export default ProductionProcess;
+export default ProductionProcessItems;

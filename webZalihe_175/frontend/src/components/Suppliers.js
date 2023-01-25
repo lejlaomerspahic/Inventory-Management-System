@@ -1,10 +1,10 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 const Suppliers = ({
   name,
   jib,
@@ -21,6 +21,14 @@ const Suppliers = ({
   const handleEdit = (e) => {
     navigate(`/dobavljaci/${id}`);
   };
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
 
   return (
     <div>
@@ -67,6 +75,16 @@ const Suppliers = ({
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Datum pocetka: {dateOfStart}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Materials:
+            {materials.map((material) => {
+              return (
+                <Typography variant="body2" color="text.secondary">
+                  {material?.name}
+                </Typography>
+              );
+            })}
           </Typography>
           <Button
             variant="contained"

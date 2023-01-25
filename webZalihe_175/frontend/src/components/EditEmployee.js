@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function EditEmployee() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
@@ -30,12 +31,25 @@ function EditEmployee() {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    if (!isLoggedInAdmin) {
+      navigate(`/`);
+    }
+  }, []);
+
   const handeChange = (e) => {
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
     });
   };
+
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin) {
+      navigate(`/`);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

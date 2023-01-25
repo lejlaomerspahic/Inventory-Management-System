@@ -1,9 +1,10 @@
-import supplier from "../models/supplier";
+import Supplier from "../models/supplier";
+import Material from "../models/material";
 
 export const getAllSuppliers = async (req, res, next) => {
   let suppliers;
   try {
-    suppliers = await supplier.find();
+    suppliers = await Supplier.find().populate("materials");
   } catch (err) {
     return console.log(err);
   }
@@ -14,20 +15,39 @@ export const getAllSuppliers = async (req, res, next) => {
 };
 
 export const addSuppliers = async (req, res, next) => {
-  const { name, jib, pdv,   phoneNumber, contactPerson, email, dateOfStart, dateOfEnd,materials } = req.body;
-  const supplier1 = new supplier({
-    name, 
-    jib, 
+  const {
+    name,
+    jib,
     pdv,
-    phoneNumber, 
-    contactPerson, 
-    email, 
-    dateOfStart,   
+    phoneNumber,
+    contactPerson,
+    email,
+    dateOfStart,
     dateOfEnd,
-    materials
+    materials,
+  } = req.body;
+  const supplier1 = new Supplier({
+    name,
+    jib,
+    pdv,
+    phoneNumber,
+    contactPerson,
+    email,
+    dateOfStart,
+    dateOfEnd,
+    materials,
   });
   try {
     await supplier1.save();
+    const updateMaterials = await Promise.all(
+      supplier1.materials.map(async (materialId) => {
+        return await Material.findByIdAndUpdate(
+          materialId,
+          { $push: { supplier: supplier1._id } },
+          { new: true }
+        );
+      })
+    );
   } catch (err) {
     return console.log(err);
   }
@@ -35,20 +55,30 @@ export const addSuppliers = async (req, res, next) => {
 };
 
 export const updatesuppliers = async (req, res, next) => {
-  const {name, jib, pdv,   phoneNumber, contactPerson, email, dateOfStart, dateOfEnd,materials } = req.body;
+  const {
+    name,
+    jib,
+    pdv,
+    phoneNumber,
+    contactPerson,
+    email,
+    dateOfStart,
+    dateOfEnd,
+    materials,
+  } = req.body;
   const supplierId = req.params.id;
   let supplier1;
   try {
-    supplier1 = await supplier.findByIdAndUpdate(supplierId, {
-    name, 
-    jib, 
-    pdv,
-    phoneNumber, 
-    contactPerson, 
-    email, 
-    dateOfStart,   
-    dateOfEnd,
-    materials
+    supplier1 = await Supplier.findByIdAndUpdate(supplierId, {
+      name,
+      jib,
+      pdv,
+      phoneNumber,
+      contactPerson,
+      email,
+      dateOfStart,
+      dateOfEnd,
+      materials,
     });
   } catch (err) {
     return console.log(err);
@@ -63,7 +93,7 @@ export const getById = async (req, res, next) => {
   const id = req.params.id;
   let supplier1;
   try {
-    supplier1 = await supplier.findById(id);
+    supplier1 = await Supplier.findById(id);
   } catch (err) {
     return console.log(err);
   }
@@ -78,7 +108,7 @@ export const deletesupplier = async (req, res, next) => {
 
   let supplier1;
   try {
-    supplier1 = await supplier.findByIdAndRemove(id);
+    supplier1 = await Supplier.findByIdAndRemove(id);
   } catch (err) {
     return console.log(err);
   }

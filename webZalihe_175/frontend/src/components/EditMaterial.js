@@ -9,9 +9,9 @@ import {
   Button,
   Select,
   MenuItem,
-  FormControl,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function EditMaterial() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
@@ -91,7 +91,13 @@ function EditMaterial() {
       .then((data) => console.log(data))
       .then(() => navigate("/sirovine"));
   };
-
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin || !isLoggedIn) {
+      navigate(`/`);
+    }
+  }, []);
   console.log(inputs);
   return (
     <div>
@@ -130,7 +136,7 @@ function EditMaterial() {
             <InputLabel sx={labelStyles}>Price</InputLabel>
             <TextField
               onChange={handeChange}
-              name="picURL"
+              name="price"
               value={inputs.price}
               margin="auto"
               variant="outlined"

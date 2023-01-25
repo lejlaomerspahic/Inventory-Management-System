@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -35,11 +34,15 @@ const Header = () => {
               value={value}
               onChange={(e, val) => setValue(val)}
             >
-              <Tab LinkComponent={Link} to="/sirovine" label="Sirovine"></Tab>
               <Tab
                 LinkComponent={Link}
-                to="/proizvodi/dodaj"
-                label="Dodaj proizvod"
+                to="/proizvodi"
+                label="Pregledaj proizvode"
+              ></Tab>
+              <Tab
+                LinkComponent={Link}
+                to="/sirovine"
+                label="Pregledaj sirovine"
               ></Tab>
               <Tab
                 LinkComponent={Link}

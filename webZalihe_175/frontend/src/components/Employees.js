@@ -1,8 +1,9 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { React, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const Emploeyees = ({
   id,
@@ -15,6 +16,12 @@ const Emploeyees = ({
   user,
 }) => {
   const navigate = useNavigate();
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin) {
+      navigate(`/`);
+    }
+  }, []);
 
   const handleEdit = (e) => {
     navigate(`/zaposlenici/${id}`);

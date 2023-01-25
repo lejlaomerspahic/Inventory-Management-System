@@ -1,11 +1,13 @@
-import productionProcessItem from "../models/productionProcessItem";
+import ProductionProcessItem from "../models/productionProcessItem";
+import Material from "../models/material";
+import ProductionProcess from "../models/productionProcess";
 
 export const getAllproductionProcessItems = async (req, res, next) => {
   let productionProcessItems;
   try {
-    productionProcessItems = await productionProcessItem
-      .find()
-      .populate("material");
+    productionProcessItems = await ProductionProcessItem.find().populate(
+      "material"
+    );
   } catch (err) {
     return console.log(err);
   }
@@ -17,13 +19,29 @@ export const getAllproductionProcessItems = async (req, res, next) => {
 
 export const addproductionProcessItems = async (req, res, next) => {
   const { quantity, productionProcesses, material } = req.body;
-  const productionProcessItem1 = new productionProcessItem({
+  const productionProcessItem1 = new ProductionProcessItem({
     quantity,
     productionProcesses,
     material,
   });
   try {
     await productionProcessItem1.save();
+    const updatedMaterial = await Material.findByIdAndUpdate(
+      material,
+      { $push: { productionProcessItems: productionProcessItem1._id } },
+      { new: true }
+    );
+    const updatedProductionProcesses = await Promise.all(
+      productionProcessItem1.productionProcesses.map(
+        async (productionProcessId) => {
+          return await ProductionProcess.findByIdAndUpdate(
+            productionProcessId,
+            { $push: { productionProcessItems: productionProcessItem1._id } },
+            { new: true }
+          );
+        }
+      )
+    );
   } catch (err) {
     return console.log(err);
   }
@@ -35,12 +53,23 @@ export const updateproductionProcessItems = async (req, res, next) => {
   const productionProcessItemId = req.params.id;
   let productionProcessItem1;
   try {
-    productionProcessItem1 = await productionProcessItem.findByIdAndUpdate(
+    productionProcessItem1 = await ProductionProcessItem.findByIdAndUpdate(
       productionProcessItemId,
       {
         quantity,
         productionProcesses,
       }
+    );
+    const updatedProductionProcesses = await Promise.all(
+      productionProcessItem1.productionProcesses.map(
+        async (productionProcessId) => {
+          return await ProductionProcess.findByIdAndUpdate(
+            productionProcessId,
+            { $push: { productionProcessItems: productionProcessItem1._id } },
+            { new: true }
+          );
+        }
+      )
     );
   } catch (err) {
     return console.log(err);
@@ -57,7 +86,7 @@ export const getById = async (req, res, next) => {
   const id = req.params.id;
   let productionProcessItem1;
   try {
-    productionProcessItem1 = await productionProcessItem.findById(id);
+    productionProcessItem1 = await ProductionProcessItem.findById(id);
   } catch (err) {
     return console.log(err);
   }
@@ -72,7 +101,7 @@ export const deleteproductionProcessItem = async (req, res, next) => {
 
   let productionProcessItem1;
   try {
-    productionProcessItem1 = await productionProcessItem.findByIdAndRemove(id);
+    productionProcessItem1 = await ProductionProcessItem.findByIdAndRemove(id);
   } catch (err) {
     return console.log(err);
   }

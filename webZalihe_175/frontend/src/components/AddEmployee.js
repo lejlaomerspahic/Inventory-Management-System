@@ -1,11 +1,13 @@
 import { InputLabel, TextField, Typography, Box, Button } from "@mui/material";
 import axios from "axios";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "20px", fontWeight: "bold" };
 
 function AddEmployee() {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -16,6 +18,13 @@ function AddEmployee() {
     name: "",
     password: "",
   });
+
+  const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
+  useEffect(() => {
+    if (!isLoggedInAdmin) {
+      navigate(`/`);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +44,7 @@ function AddEmployee() {
       );
       const employee = employeeRes.data;
       console.log(employee);
+      navigate("/zaposlenici");
       // const userRes = await axios.post(
       //   "http://localhost:8082/api/user/signup",
       //   {
