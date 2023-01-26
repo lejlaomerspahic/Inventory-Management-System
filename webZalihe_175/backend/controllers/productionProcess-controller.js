@@ -5,9 +5,10 @@ import Product from "../models/product";
 export const getAllproductionProccess = async (req, res, next) => {
   let productionProcesss;
   try {
-    productionProcesss = await ProductionProcess.find().populate(
-      "productionProcessItems"
-    );
+    productionProcesss = await ProductionProcess.find().populate({
+      path: "productionProcessItems",
+      populate: { path: "material" },
+    });
   } catch (err) {
     return console.log(err);
   }

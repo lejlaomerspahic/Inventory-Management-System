@@ -23,7 +23,6 @@ function AddProductionProcess() {
     name: "",
     startDate: "",
     endDate: "",
-    products: "",
     productionProcessItems: "",
   });
 
@@ -139,18 +138,6 @@ function AddProductionProcess() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Product</InputLabel>
-          <Select
-            name="products"
-            onChange={handeChange}
-            value={inputs.products}
-          >
-            {productList.map((product) => (
-              <MenuItem key={product._id} value={product._id}>
-                {product?.name}
-              </MenuItem>
-            ))}
-          </Select>
           <InputLabel sx={labelStyles}>
             Production process item [material]
           </InputLabel>

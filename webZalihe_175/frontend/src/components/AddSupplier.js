@@ -25,7 +25,6 @@ function AddSupplier() {
     email: "",
     dateOfStart: "",
     dateOfEnd: "",
-    materials: "",
   });
 
   const handeChange = (e) => {
@@ -165,18 +164,6 @@ function AddSupplier() {
             margin="auto"
             variant="outlined"
           ></TextField>
-          <InputLabel sx={labelStyles}>Material</InputLabel>
-          <Select
-            name="materials"
-            onChange={handeChange}
-            value={inputs.materials}
-          >
-            {materialsList.map((materials) => (
-              <MenuItem key={materials._id} value={materials._id}>
-                {materials?.name}
-              </MenuItem>
-            ))}
-          </Select>
           <Button
             sx={{ mt: 2, borderRadius: 2 }}
             variant="contained"

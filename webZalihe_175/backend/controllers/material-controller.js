@@ -106,7 +106,7 @@ export const updateMaterials = async (req, res, next) => {
             .status(404)
             .json({ message: "Production Process not found" });
         }
-        const newPrice = productionProcessItems.quantity * material1.price;
+        const newPrice = productionProcessItem.quantity * material1.price;
         productionProcess.price = newPrice;
         await productionProcess.save();
 
@@ -122,6 +122,11 @@ export const updateMaterials = async (req, res, next) => {
         }
       }
     }
+    const updatedSupplier = await Supplier.findByIdAndUpdate(
+      supplier,
+      { $push: { materials: material1._id } },
+      { new: true }
+    );
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Unable to update the material" });

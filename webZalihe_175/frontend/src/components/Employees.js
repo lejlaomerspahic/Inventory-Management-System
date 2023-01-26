@@ -48,7 +48,7 @@ const Emploeyees = ({
             align="center"
             fontWeight="bold"
           >
-            Employee: {firstName} {lastName}
+            Zaposlenik: {firstName} {lastName}
           </Typography>
         </CardContent>
         <CardContent>
@@ -59,16 +59,16 @@ const Emploeyees = ({
             Password: {user?.password}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Phone: {phoneNumber}
+            Broj telefona: {phoneNumber}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Email: {email}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Date Of join {dateOfJoin}
+            Datum pridruzivanja {dateOfJoin}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Date Of leave: {dateOfLeave}
+            Datum napustanja: {dateOfLeave}
           </Typography>
           <Button
             variant="contained"

@@ -5,7 +5,13 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-const ProductionProcess = ({ name, startDate, endDate, price }) => {
+const ProductionProcess = ({
+  name,
+  startDate,
+  endDate,
+  price,
+  productionProcessItems,
+}) => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   const navigate = useNavigate();
@@ -48,6 +54,18 @@ const ProductionProcess = ({ name, startDate, endDate, price }) => {
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Price: {price} KM
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Kolicina - materijal:
+            {productionProcessItems.map((productionProcessItem) => {
+              return (
+                <Typography variant="body2" color="text.secondary">
+                  {productionProcessItem?.quantity} -{" "}
+                  {productionProcessItem.material?.name} [{" "}
+                  {productionProcessItem.material?.price} KM ]
+                </Typography>
+              );
+            })}
           </Typography>
         </CardContent>
       </Card>

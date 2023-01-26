@@ -77,7 +77,7 @@ const Suppliers = ({
             Datum pocetka: {dateOfStart}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Materials:
+            Materiali:
             {materials.map((material) => {
               return (
                 <Typography variant="body2" color="text.secondary">
