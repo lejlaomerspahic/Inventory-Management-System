@@ -56,9 +56,6 @@ const Emploeyees = ({
             Username: {user?.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Password: {user?.password}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
             Broj telefona: {phoneNumber}
           </Typography>
           <Typography variant="body2" color="text.secondary">

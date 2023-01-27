@@ -16,7 +16,7 @@ const ProductionProcess = ({
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoggedInAdmin || !isLoggedIn) {
+    if (!isLoggedInAdmin && !isLoggedIn) {
       navigate(`/`);
     }
   }, []);
@@ -53,10 +53,7 @@ const ProductionProcess = ({
             End date: {endDate}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Price: {price} KM
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Kolicina - materijal:
+            Kolicina - sirovina:
             {productionProcessItems.map((productionProcessItem) => {
               return (
                 <Typography variant="body2" color="text.secondary">
@@ -66,6 +63,9 @@ const ProductionProcess = ({
                 </Typography>
               );
             })}
+            <Typography variant="body2" color="text.secondary">
+              Cijena: {price} KM
+            </Typography>
           </Typography>
         </CardContent>
       </Card>

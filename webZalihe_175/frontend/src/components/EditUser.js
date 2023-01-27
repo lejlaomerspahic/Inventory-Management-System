@@ -64,7 +64,7 @@ function EditUser() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   useEffect(() => {
-    if (!isLoggedInAdmin || !isLoggedIn) {
+    if (!isLoggedInAdmin && !isLoggedIn) {
       navigate(`/`);
     }
   }, []);
@@ -108,7 +108,6 @@ function EditUser() {
             <TextField
               onChange={handeChange}
               name="password"
-              value={inputs.password}
               margin="auto"
               variant="outlined"
             ></TextField>

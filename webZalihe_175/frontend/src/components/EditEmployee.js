@@ -155,7 +155,6 @@ function EditEmployee() {
             <TextField
               onChange={handeChange}
               name="password"
-              value={inputs.password}
               margin="auto"
               variant="outlined"
             ></TextField>

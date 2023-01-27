@@ -81,7 +81,7 @@ function AddProductionProcessItems() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   useEffect(() => {
-    if (!isLoggedInAdmin || !isLoggedIn) {
+    if (!isLoggedInAdmin && !isLoggedIn) {
       navigate(`/`);
     }
   }, []);

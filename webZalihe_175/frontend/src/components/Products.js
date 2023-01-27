@@ -16,7 +16,6 @@ const Products = ({
   profitMargin,
 }) => {
   const navigate = useNavigate();
-
   const handleEdit = (e) => {
     navigate(`/proizvodi/${id}`);
   };
@@ -24,7 +23,7 @@ const Products = ({
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   useEffect(() => {
-    if (!isLoggedInAdmin || !isLoggedIn) {
+    if (!isLoggedIn && !isLoggedInAdmin) {
       navigate(`/`);
     }
   }, []);

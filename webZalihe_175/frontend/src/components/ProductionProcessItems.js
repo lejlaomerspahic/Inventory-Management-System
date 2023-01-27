@@ -10,7 +10,7 @@ const ProductionProcessItems = ({ quantity, material }) => {
   const isLoggedInAdmin = useSelector((state) => state.isLoggedInAdmin);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoggedInAdmin || !isLoggedIn) {
+    if (!isLoggedInAdmin && !isLoggedIn) {
       navigate(`/`);
     }
   }, []);
